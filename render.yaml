@@ -1,0 +1,61 @@
+# AgentRH · back de l'espace conformité, une instance par client.
+# Pour un nouveau client : dupliquer ce service sous un autre nom, avec sa
+# propre base Neon. Ne jamais partager une instance entre deux clients.
+services:
+  - type: web
+    name: pia-back-argos
+    runtime: ruby
+    region: frankfurt
+    plan: starter
+    buildCommand: bundle install
+    startCommand: bundle exec rails db:prepare && bundle exec rails agentrh:bootstrap && bundle exec puma -C config/puma.rb
+    disk:
+      name: pieces-jointes
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: BUNDLE_WITHOUT
+        value: development:test
+      - key: ENABLE_AUTHENTICATION
+        value: "true"
+      - key: DEFAULT_LOCALE
+        value: fr
+      # Secrets générés une fois par Render. Ne pas les modifier ensuite :
+      # changer DEVISE_PEPPER invalide tous les mots de passe.
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DEVISE_SECRET_KEY
+        generateValue: true
+      - key: DEVISE_PEPPER
+        generateValue: true
+      # Identifiants de l'application OAuth, à recopier dans Vercel
+      # (PIA_CLIENT_ID et PIA_CLIENT_SECRET).
+      - key: OAUTH_CLIENT_ID
+        generateValue: true
+      - key: OAUTH_CLIENT_SECRET
+        generateValue: true
+      # Valeurs à saisir dans Render à la création du service
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_CORS_ORIGINS
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: SMTP_ADDRESS
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_DOMAIN
+        sync: false
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_AUTHENTICATION
+        sync: false

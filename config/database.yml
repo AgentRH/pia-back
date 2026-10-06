@@ -1,0 +1,34 @@
+# AgentRH : ce fichier est versionné dans ce fork (il est ignoré dans le dépôt
+# d'origine) pour que le back se déploie sans étape manuelle.
+# En production, la connexion vient de la variable DATABASE_URL (Neon).
+#
+# prepared_statements et advisory_locks sont désactivés pour que la connexion
+# fonctionne aussi bien avec l'adresse directe qu'avec l'adresse « pooled » de Neon.
+
+development:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: pia_development
+  pool:     5
+  username:
+  password:
+  template: template0
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: pia_test
+  pool:     5
+  username:
+  password:
+  template: template0
+
+production:
+  adapter:  postgresql
+  encoding: unicode
+  url:      <%= ENV["DATABASE_URL"] %>
+  pool:     <%= ENV.fetch("RAILS_MAX_THREADS", 3) %>
+  prepared_statements: false
+  advisory_locks: false
