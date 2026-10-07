@@ -1,1 +1,21 @@
-<%= t 'email_new_account_uuid.content', uuid: @user.uuid %>
+<p style="margin:0 0 16px 0;">Bonjour<%= @user.firstname.present? ? " #{@user.firstname}" : '' %>,</p>
+
+<p style="margin:0 0 16px 0;">AgentRH vous invite à collaborer sur <strong><%= @workspace %></strong>.</p>
+
+<p style="margin:0 0 24px 0;">Cet espace sert à consulter, compléter et évaluer l'analyse d'impact relative à la protection des données (AIPD) du service AgentRH.</p>
+
+<% if @action_url %>
+<p style="margin:0 0 4px 0;"><strong>1. Pour créer votre compte, cliquez sur ce bouton :</strong></p>
+<%= render 'action_button', href: @action_url, label: 'Créer mon compte' %>
+
+<p style="margin:0 0 4px 0;"><strong>2. Saisissez le code d'activation ci-dessous.</strong> Il est déjà renseigné si vous passez par le bouton.</p>
+<% else %>
+<p style="margin:0 0 4px 0;"><strong>Pour créer votre compte</strong>, ouvrez l'espace conformité, cliquez sur « Activer un compte », puis saisissez le code d'activation ci-dessous.</p>
+<% end %>
+<%= render 'code_block', value: @user.uuid %>
+
+<p style="margin:0 0 16px 0;"><strong><%= @action_url ? '3. ' : '' %>Choisissez votre mot de passe.</strong> Il doit compter au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial comme ! ? @ ou #.</p>
+
+<% if @action_url %>
+<p style="margin:0;font-size:13px;color:#5A6283;">Si le bouton ne fonctionne pas, copiez cette adresse dans votre navigateur :<br /><%= @action_url %></p>
+<% end %>

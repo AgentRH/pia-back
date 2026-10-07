@@ -1,1 +1,25 @@
-<%= t 'email_new_account_uuid.content', uuid: @user.uuid %>
+<p style="margin:0 0 16px 0;">Bonjour<%= @user.firstname.present? ? " #{@user.firstname}" : '' %>,</p>
+
+<% if @pending_activation %>
+<p style="margin:0 0 24px 0;">Voici votre nouveau code d'activation pour <strong><%= @workspace %></strong>. Il remplace le précédent.</p>
+<% else %>
+<p style="margin:0 0 24px 0;">Vous avez demandé à réinitialiser votre mot de passe sur <strong><%= @workspace %></strong>.</p>
+<% end %>
+
+<% if @action_url %>
+<p style="margin:0 0 4px 0;"><strong>1. Cliquez sur ce bouton :</strong></p>
+<%= render 'action_button', href: @action_url, label: (@pending_activation ? 'Créer mon compte' : 'Choisir un nouveau mot de passe') %>
+
+<p style="margin:0 0 4px 0;"><strong>2. Saisissez le code ci-dessous.</strong> Il est déjà renseigné si vous passez par le bouton.</p>
+<% elsif @pending_activation %>
+<p style="margin:0 0 4px 0;">Ouvrez l'espace conformité, cliquez sur « Activer un compte », puis saisissez le code ci-dessous.</p>
+<% else %>
+<p style="margin:0 0 4px 0;">Revenez sur la page où vous avez demandé la réinitialisation, puis saisissez le code ci-dessous.</p>
+<% end %>
+<%= render 'code_block', value: @user.uuid %>
+
+<p style="margin:0 0 16px 0;"><strong><%= @action_url ? '3. ' : '' %>Choisissez votre mot de passe.</strong> Il doit compter au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial comme ! ? @ ou #.</p>
+
+<% unless @pending_activation %>
+<p style="margin:0;font-size:13px;color:#5A6283;">Si vous n'êtes pas à l'origine de cette demande, ignorez ce message : votre mot de passe actuel reste valable.</p>
+<% end %>

@@ -1,1 +1,15 @@
-<%= I18n.t 'email_new_account_uuid.content', uuid: @user.uuid %>
+Bonjour<%= @user.firstname.present? ? " #{@user.firstname}" : '' %>,
+
+AgentRH vous invite à collaborer sur <%= @workspace %>.
+
+Cet espace sert à consulter, compléter et évaluer l'analyse d'impact relative à la protection des données (AIPD) du service AgentRH.
+
+<% if @action_url %>1. Pour créer votre compte, ouvrez cette adresse :
+<%= @action_url %>
+
+2. Saisissez le code d'activation ci-dessous. Il est déjà renseigné si vous passez par le lien.
+<% else %>Pour créer votre compte, ouvrez l'espace conformité, cliquez sur « Activer un compte », puis saisissez le code d'activation ci-dessous.
+<% end %>
+<%= @user.uuid %>
+
+<%= @action_url ? '3. ' : '' %>Choisissez votre mot de passe. Il doit compter au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial comme ! ? @ ou #.

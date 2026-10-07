@@ -15,6 +15,7 @@ La CNIL n'est ni l'éditeur ni le garant de cette version.
 | Réglages SMTP et expéditeur par variables d'environnement | `config/initializers/mailer.rb`, `config/initializers/devise.rb`, `app/mailers/application_mailer.rb` |
 | Nom d'hôte par défaut fourni par Render | `config/initializers/default_url_options.rb` |
 | Initialisation automatique d'une instance | `lib/tasks/agentrh.rake` |
+| Emails réécrits en français (invitation, nouveau code, évaluation, validation), avec bouton vers le site | `app/mailers/`, `app/views/user_mailer/`, `app/views/layouts/mailer.*` |
 | Déploiement Render | `render.yaml` |
 
 Aucune règle métier ni aucun contrôle d'accès n'a été modifié.
@@ -42,6 +43,10 @@ base Neon. Ne jamais inviter deux clients sur la même instance.
 | `EMAIL_FROM` | expéditeur des emails, par exemple `conformite@exemple.fr` |
 | `SMTP_ADDRESS`, `SMTP_PORT`, `SMTP_DOMAIN`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_AUTHENTICATION` | réglages du service d'envoi d'emails (`SMTP_AUTHENTICATION` vaut en général `plain`) |
 
+   Ajouter ensuite à la main, dans l'onglet Environment du service, deux variables qui servent
+   aux emails : `FRONT_URL` (adresse du site vue par les utilisateurs, sans barre finale, par
+   exemple `https://pia-argos.agentrh.ai`) et `CLIENT_NAME` (nom du client). Sans elles, les
+   emails partent quand même, mais sans bouton ni nom de client.
 4. Au premier démarrage, le back crée les tables, l'application OAuth et le compte
    administrateur. Les journaux Render affichent des lignes `[agentrh]` qui le confirment.
 5. Recopier `OAUTH_CLIENT_ID` et `OAUTH_CLIENT_SECRET` (onglet Environment de Render)

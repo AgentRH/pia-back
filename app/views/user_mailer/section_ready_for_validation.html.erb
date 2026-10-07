@@ -1,1 +1,9 @@
-<%= t 'section_ready_for_validation.content', pia_name: @pia_name %>
+<p style="margin:0 0 16px 0;">Bonjour<%= @validator.firstname.present? ? " #{@validator.firstname}" : '' %>,</p>
+
+<p style="margin:0 0 16px 0;">Une partie de l'analyse <strong>« <%= @pia_name %> »</strong> a été évaluée et attend votre validation sur <%= @workspace %>.</p>
+
+<p style="margin:0 0 24px 0;">Vous pourrez valider ou refuser l'analyse une fois toutes ses parties évaluées.</p>
+
+<% if @action_url %>
+<%= render 'action_button', href: @action_url, label: "Ouvrir l'espace conformité" %>
+<% end %>

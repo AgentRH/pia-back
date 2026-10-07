@@ -1,0 +1,8 @@
+Bonjour<%= @validator.firstname.present? ? " #{@validator.firstname}" : '' %>,
+
+Une partie de l'analyse « <%= @pia_name %> » a été évaluée et attend votre validation sur <%= @workspace %>.
+
+Vous pourrez valider ou refuser l'analyse une fois toutes ses parties évaluées.
+<% if @action_url %>
+Ouvrir l'espace conformité : <%= @action_url %>
+<% end %>

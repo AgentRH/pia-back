@@ -1,1 +1,9 @@
-<%= t 'section_ready_for_evaluation.content', pia_name: @pia_name %>
+<p style="margin:0 0 16px 0;">Bonjour<%= @evaluator.firstname.present? ? " #{@evaluator.firstname}" : '' %>,</p>
+
+<p style="margin:0 0 16px 0;">Une partie de l'analyse <strong>« <%= @pia_name %> »</strong> attend votre évaluation sur <%= @workspace %>.</p>
+
+<p style="margin:0 0 24px 0;">Pour chaque élément, vous pouvez indiquer s'il est acceptable, améliorable ou à corriger, et ajouter un commentaire.</p>
+
+<% if @action_url %>
+<%= render 'action_button', href: @action_url, label: "Ouvrir l'espace conformité" %>
+<% end %>

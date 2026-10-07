@@ -1,0 +1,8 @@
+Bonjour<%= @evaluator.firstname.present? ? " #{@evaluator.firstname}" : '' %>,
+
+Une partie de l'analyse « <%= @pia_name %> » attend votre évaluation sur <%= @workspace %>.
+
+Pour chaque élément, vous pouvez indiquer s'il est acceptable, améliorable ou à corriger, et ajouter un commentaire.
+<% if @action_url %>
+Ouvrir l'espace conformité : <%= @action_url %>
+<% end %>
